@@ -21,8 +21,8 @@ public class RecipeService implements RecipeServiceInterface {
     private RecipeRepository recipeRepository;
 
     public void saveRecipe(Recipe recipeDTO) {
-        log.info("Saving a new recipe {} inside of the database", recipeDTO.getName());
-        Recipe recipe = new Recipe(recipeDTO.getName(), recipeDTO.getPrepTime(), recipeDTO.getCookTime(),
+        log.info("Saving a new recipe {} inside of the database", recipeDTO.getTitle());
+        Recipe recipe = new Recipe(recipeDTO.getTitle(), recipeDTO.getPrepTime(), recipeDTO.getCookTime(),
                 recipeDTO.getServings(), recipeDTO.getIngredients(), recipeDTO.getDirections(),
                 recipeDTO.getAddedBy());
         recipeRepository.save(recipe);

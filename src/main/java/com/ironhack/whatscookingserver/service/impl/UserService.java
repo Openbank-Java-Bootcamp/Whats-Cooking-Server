@@ -2,8 +2,10 @@ package com.ironhack.whatscookingserver.service.impl;
 
 import com.ironhack.whatscookingserver.models.Cookbook;
 import com.ironhack.whatscookingserver.models.User;
+import com.ironhack.whatscookingserver.repository.CookbookRepository;
 import com.ironhack.whatscookingserver.repository.RoleRepository;
 import com.ironhack.whatscookingserver.repository.UserRepository;
+import com.ironhack.whatscookingserver.service.interfaces.CookbookServiceInterface;
 import com.ironhack.whatscookingserver.service.interfaces.UserServiceInterface;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +31,17 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private CookbookServiceInterface cookbookService;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     public User saveUser(User userSignupDTO) {
         log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
         User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //automatically create a cookbook and link it to the user
-        Cookbook cookbook = new Cookbook();
-        cookbook.setOwner(user);
+        //automatically create a cookbook for the user
+        cookbookService.saveCookbook(user);
         return userRepository.save(user);
     }
 

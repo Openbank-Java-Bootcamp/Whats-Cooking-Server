@@ -32,6 +32,7 @@ public class Cookbook {
 
 
     public Cookbook(User owner) {
+        //this.id = owner.getId();
         this.owner = owner;
         this.recipeList = new ArrayList<>();
     }

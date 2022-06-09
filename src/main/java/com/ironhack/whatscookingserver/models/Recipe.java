@@ -21,7 +21,7 @@ public class Recipe {
     private Long id;
 
     @NotEmpty(message = "Provide a recipe name.")
-    private String name;
+    private String title;
 
     @Column(name = "prep_time")
     private int prepTime;
@@ -42,11 +42,11 @@ public class Recipe {
     @ManyToMany(mappedBy = "recipeList")
     private List<Cookbook> cookbooks;
 
-    private boolean isOriginal;
+    //private boolean isOriginal;
 
 
-    public Recipe(String name, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy) {
-        this.name = name;
+    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy) {
+        this.title = title;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
