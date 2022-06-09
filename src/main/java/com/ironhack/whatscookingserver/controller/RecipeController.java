@@ -26,7 +26,7 @@ public class RecipeController {
     @GetMapping("/recipes")
     @ResponseStatus(HttpStatus.OK)
     public List<Recipe> getRecipes() {
-        return recipeService.getOriginalRecipes();
+        return recipeService.getRecipes();
     }
 
     @GetMapping("/recipes/{id}")

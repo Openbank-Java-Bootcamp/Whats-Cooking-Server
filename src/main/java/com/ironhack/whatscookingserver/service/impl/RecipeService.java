@@ -24,16 +24,16 @@ public class RecipeService implements RecipeServiceInterface {
         log.info("Saving a new recipe {} inside of the database", recipeDTO.getName());
         Recipe recipe = new Recipe(recipeDTO.getName(), recipeDTO.getPrepTime(), recipeDTO.getCookTime(),
                 recipeDTO.getServings(), recipeDTO.getIngredients(), recipeDTO.getDirections(),
-                recipeDTO.getAddedBy(), recipeDTO.getCookbooks(), recipeDTO.isOriginal());
+                recipeDTO.getAddedBy());
         recipeRepository.save(recipe);
     }
 
-    public List<Recipe> getOriginalRecipes() {
+    public List<Recipe> getRecipes() {
         List<Recipe> recipes = recipeRepository.findAll();
 
-        List<Recipe> originalRecipes = recipes.stream().filter(recipe ->
-                recipe.isOriginal()).collect(Collectors.toList());
-        return originalRecipes;
+//        List<Recipe> originalRecipes = recipes.stream().filter(recipe ->
+//                recipe.isOriginal()).collect(Collectors.toList());
+        return recipes;
     }
 
     public Recipe findById(Long id) {

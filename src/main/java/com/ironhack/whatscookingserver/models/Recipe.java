@@ -1,11 +1,13 @@
 package com.ironhack.whatscookingserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -36,13 +38,14 @@ public class Recipe {
     @ManyToOne
     private User addedBy;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "recipeList")
     private List<Cookbook> cookbooks;
 
     private boolean isOriginal;
 
 
-    public Recipe(String name, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy, List<Cookbook> cookbooks, boolean isOriginal) {
+    public Recipe(String name, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy) {
         this.name = name;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
@@ -50,8 +53,17 @@ public class Recipe {
         this.ingredients = ingredients;
         this.directions = directions;
         this.addedBy = addedBy;
-        this.cookbooks = cookbooks;
-        this.isOriginal = isOriginal;
+        this.cookbooks = new ArrayList<>();
+        //this.isOriginal = isOriginal;
+    }
+
+
+    //METHODS
+    public void addCookbookToList(Cookbook cookbook) {
+        List<Cookbook> cookbooks = getCookbooks();
+        cookbooks.add(cookbook);
+        cookbook.saveRecipeToCookbook(this);
+        setCookbooks(cookbooks);
     }
 
 }

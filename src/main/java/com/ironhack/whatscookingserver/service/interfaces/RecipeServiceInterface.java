@@ -7,7 +7,7 @@ import java.util.List;
 public interface RecipeServiceInterface {
     void saveRecipe(Recipe recipeDTO);
 
-    List<Recipe> getOriginalRecipes();
+    List<Recipe> getRecipes();
 
     Recipe findById(Long id);
 

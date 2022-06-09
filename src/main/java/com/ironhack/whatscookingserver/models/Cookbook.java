@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,4 +29,17 @@ public class Cookbook {
             inverseJoinColumns = @JoinColumn(name = "recipe_id")
     )
     private List<Recipe> recipeList;
+
+
+    public Cookbook(User owner) {
+        this.owner = owner;
+        this.recipeList = new ArrayList<>();
+    }
+
+    //methods
+    public void saveRecipeToCookbook(Recipe recipe) {
+        List<Recipe> recipeList = this.getRecipeList();
+        recipeList.add(recipe);
+        setRecipeList(recipeList);
+    }
 }

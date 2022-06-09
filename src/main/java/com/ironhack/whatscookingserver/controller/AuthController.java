@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api")
 @Slf4j
 public class AuthController {
     @Autowired
@@ -23,14 +23,14 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/signup")
+    @PostMapping("/auth/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user) {
         return userService.saveUser(user);
     }
 
     //if a user re-enters the app and the token is still valid, user will not need to login again
-    @GetMapping("/verify")
+    @GetMapping("/auth/verify")
     @ResponseStatus(HttpStatus.OK)
     public String verifyToken(Authentication authentication) {
         String email = (String) authentication.getPrincipal();
