@@ -40,9 +40,10 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
         User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         //automatically create a cookbook for the user
         cookbookService.saveCookbook(user);
-        return userRepository.save(user);
+        return user;
     }
 
     public List<User> getUsers() {

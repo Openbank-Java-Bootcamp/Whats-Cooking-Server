@@ -5,6 +5,7 @@ import com.ironhack.whatscookingserver.DTO.UserVerifyDTO;
 import com.ironhack.whatscookingserver.models.User;
 import com.ironhack.whatscookingserver.repository.UserRepository;
 import com.ironhack.whatscookingserver.service.impl.UserService;
+import com.ironhack.whatscookingserver.service.interfaces.CookbookServiceInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,15 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
+    private CookbookServiceInterface cookbookService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @PostMapping("/auth/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user) {
-        return userService.saveUser(user);
+       return userService.saveUser(user);
     }
 
     //if a user re-enters the app and the token is still valid, user will not need to login again

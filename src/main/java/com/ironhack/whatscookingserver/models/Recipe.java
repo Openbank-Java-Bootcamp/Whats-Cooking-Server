@@ -62,7 +62,14 @@ public class Recipe {
     public void addCookbookToList(Cookbook cookbook) {
         List<Cookbook> cookbooks = getCookbooks();
         cookbooks.add(cookbook);
-        cookbook.saveRecipeToCookbook(this);
+        cookbook.addRecipeToCookbook(this);
+        setCookbooks(cookbooks);
+    }
+
+    public void removeCookbookFromList(Cookbook cookbook) {
+        List<Cookbook> cookbooks = getCookbooks();
+        cookbooks.remove(cookbook);
+        cookbook.removeRecipeFromCookbook(this);
         setCookbooks(cookbooks);
     }
 

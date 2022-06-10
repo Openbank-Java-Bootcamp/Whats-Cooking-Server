@@ -16,7 +16,7 @@ import java.util.List;
 public class Cookbook {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -31,16 +31,23 @@ public class Cookbook {
     private List<Recipe> recipeList;
 
 
-    public Cookbook(User owner) {
+    public Cookbook(Long id, User owner) {
         //this.id = owner.getId();
+        this.id = id;
         this.owner = owner;
         this.recipeList = new ArrayList<>();
     }
 
     //methods
-    public void saveRecipeToCookbook(Recipe recipe) {
+    public void addRecipeToCookbook(Recipe recipe) {
         List<Recipe> recipeList = this.getRecipeList();
         recipeList.add(recipe);
+        setRecipeList(recipeList);
+    }
+
+    public void removeRecipeFromCookbook(Recipe recipe) {
+        List<Recipe> recipeList = this.getRecipeList();
+        recipeList.remove(recipe);
         setRecipeList(recipeList);
     }
 }
