@@ -1,11 +1,12 @@
 package com.ironhack.whatscookingserver.service.interfaces;
 
+import com.ironhack.whatscookingserver.DTO.RecipeDTO;
 import com.ironhack.whatscookingserver.models.Recipe;
 
 import java.util.List;
 
 public interface RecipeServiceInterface {
-    void saveRecipe(Recipe recipeDTO);
+    void saveRecipe(RecipeDTO recipeDTO);
 
     List<Recipe> getRecipes();
 

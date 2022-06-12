@@ -34,12 +34,17 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     private CookbookServiceInterface cookbookService;
 
     @Autowired
+    private CookbookRepository cookbookRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     public User saveUser(User userSignupDTO) {
         log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
         User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
+        System.out.println("user created");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println("password set");
         userRepository.save(user);
         //automatically create a cookbook for the user
         cookbookService.saveCookbook(user);

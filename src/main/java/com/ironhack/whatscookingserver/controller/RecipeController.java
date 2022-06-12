@@ -1,5 +1,6 @@
 package com.ironhack.whatscookingserver.controller;
 
+import com.ironhack.whatscookingserver.DTO.RecipeDTO;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.service.interfaces.RecipeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class RecipeController {
 
     @PostMapping("/recipes")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveRecipe(@RequestBody @Valid Recipe recipe) {
-        recipeService.saveRecipe(recipe);
+    public void saveRecipe(@RequestBody RecipeDTO recipeDTO) {
+        recipeService.saveRecipe(recipeDTO);
     }
 
     @GetMapping("/recipes")

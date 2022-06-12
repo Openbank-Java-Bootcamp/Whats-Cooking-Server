@@ -26,30 +26,6 @@ public class CookbookController {
         return cookbookService.findById(id);
     }
 
-//    @PutMapping("/cookbooks/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateCookbook(@PathVariable Long id, @RequestBody Cookbook cookbook) {
-//        cookbookService.update(id, cookbook);
-//    }
-
-//    @PatchMapping("/cookbooks/add-recipe/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void addRecipeToCookbook(@PathVariable Long id, @RequestBody Recipe recipe) {
-//        cookbookService.addRecipeToCookbook(id, recipe);
-//    }
-
-    //tried using path variable for cookbook, but not working...
-//    @PatchMapping("/cookbooks/add-recipe/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void addRecipeToCookbook(@PathVariable(name="id") Long cookbookId, @RequestParam Long recipeId) {
-//        cookbookService.addRecipeToCookbook(cookbookId, recipeId);
-//    }
-
-//    @PatchMapping("/cookbooks/add-recipe")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void addRecipeToCookbook(@RequestBody @Valid UpdateCookbookDTO updateCookbookDTO) {
-//        cookbookService.addRecipeToCookbook(updateCookbookDTO);
-//    }
 
     @PatchMapping("/cookbooks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -57,10 +33,5 @@ public class CookbookController {
         cookbookService.update(cookbookId, recipeList);
     }
 
-    @PatchMapping("/cookbooks/remove-recipe/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeRecipeFromCookbook(@PathVariable Long id, @RequestBody Recipe recipe) {
-        cookbookService.removeRecipeFromCookbook(id, recipe);
-    }
 
 }

@@ -1,9 +1,11 @@
 package com.ironhack.whatscookingserver;
 
 import com.ironhack.whatscookingserver.models.Cookbook;
+import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.models.User;
 import com.ironhack.whatscookingserver.repository.CookbookRepository;
+import com.ironhack.whatscookingserver.repository.NoteRepository;
 import com.ironhack.whatscookingserver.repository.RecipeRepository;
 import com.ironhack.whatscookingserver.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -42,7 +44,7 @@ public class WhatsCookingServerApplication {
 	}
 
 //	@Bean
-//	CommandLineRunner run(PasswordEncoder passwordEncoder, UserRepository userRepository, CookbookRepository cookbookRepository, RecipeRepository recipeRepository) {
+//	CommandLineRunner run(PasswordEncoder passwordEncoder, UserRepository userRepository, CookbookRepository cookbookRepository, RecipeRepository recipeRepository, NoteRepository noteRepository) {
 //		return args -> {
 //			User user1 = new User("Beth", "beth@email.com", "P@ssw0rdbeth");
 //			user1.setPassword(passwordEncoder.encode(user1.getPassword()));
@@ -56,9 +58,12 @@ public class WhatsCookingServerApplication {
 //			Recipe recipe2 = new Recipe("Recipe 2", 30, 60, 6, "1 cup ingredient1, 2T ingredient2, pinch of ingredient3", "First mix everything. Then bake for 30 min.", user2);
 //			Recipe recipe3 = new Recipe("Recipe 3", 20, 15, 2, "1 cup ingredient1, 2T ingredient2, pinch of ingredient3", "First mix everything. Then bake for 30 min.", user3);
 //
-//			Cookbook cookbook1 = new Cookbook(user1);
-//			Cookbook cookbook2 = new Cookbook(user2);
-//			Cookbook cookbook3 = new Cookbook(user3);
+//			Note note1 = new Note(user1, recipe1, "Use 1.5 cups of ingredient 1 instead!");
+//			noteRepository.save(note1);
+//
+//			Cookbook cookbook1 = new Cookbook(user1.getId(), user1);
+//			Cookbook cookbook2 = new Cookbook(user2.getId(), user2);
+//			Cookbook cookbook3 = new Cookbook(user3.getId(), user3);
 //
 //			recipe1.addCookbookToList(cookbook1);
 //			recipe1.addCookbookToList(cookbook3);

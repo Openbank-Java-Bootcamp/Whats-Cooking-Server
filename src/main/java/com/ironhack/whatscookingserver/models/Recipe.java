@@ -31,16 +31,26 @@ public class Recipe {
 
     private int servings;
 
+    @NotEmpty
     private String ingredients;
 
+    @NotEmpty
     private String directions;
 
     @ManyToOne
     private User addedBy;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "recipeList")
-    private List<Cookbook> cookbooks;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+//    private List<Note> notes;
+
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "recipeList")
+//    private List<Cookbook> cookbooks;
+
+//    @JsonIgnore
+//    @OneToMany
+//    private List<Note> noteList;
 
     //private boolean isOriginal;
 
@@ -53,24 +63,25 @@ public class Recipe {
         this.ingredients = ingredients;
         this.directions = directions;
         this.addedBy = addedBy;
-        this.cookbooks = new ArrayList<>();
+        //this.notes = new ArrayList<>();
+        //this.cookbooks = new ArrayList<>();
         //this.isOriginal = isOriginal;
     }
 
 
     //METHODS
-    public void addCookbookToList(Cookbook cookbook) {
-        List<Cookbook> cookbooks = getCookbooks();
-        cookbooks.add(cookbook);
-        cookbook.addRecipeToCookbook(this);
-        setCookbooks(cookbooks);
-    }
-
-    public void removeCookbookFromList(Cookbook cookbook) {
-        List<Cookbook> cookbooks = getCookbooks();
-        cookbooks.remove(cookbook);
-        cookbook.removeRecipeFromCookbook(this);
-        setCookbooks(cookbooks);
-    }
+//    public void addCookbookToList(Cookbook cookbook) {
+//        List<Cookbook> cookbooks = getCookbooks();
+//        cookbooks.add(cookbook);
+//        cookbook.addRecipeToCookbook(this);
+//        setCookbooks(cookbooks);
+//    }
+//
+//    public void removeCookbookFromList(Cookbook cookbook) {
+//        List<Cookbook> cookbooks = getCookbooks();
+//        cookbooks.remove(cookbook);
+//        cookbook.removeRecipeFromCookbook(this);
+//        setCookbooks(cookbooks);
+//    }
 
 }

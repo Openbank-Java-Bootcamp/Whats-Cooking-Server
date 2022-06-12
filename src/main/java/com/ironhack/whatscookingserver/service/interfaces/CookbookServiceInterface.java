@@ -13,15 +13,6 @@ public interface CookbookServiceInterface {
 
     Cookbook findById(Long id);
 
-//    void update(Long id, Cookbook cookbook);
-
-    //void addRecipeToCookbook(Long cookbookId, Recipe recipe);
-
-    //void addRecipeToCookbook(Long cookbookId, Long recipeId);
-
-    //void addRecipeToCookbook(UpdateCookbookDTO updateCookbookDTO);
-
     void update(Long cookbookId, List<Recipe> recipeList);
 
-    void removeRecipeFromCookbook(Long cookbookId, Recipe recipe);
 }

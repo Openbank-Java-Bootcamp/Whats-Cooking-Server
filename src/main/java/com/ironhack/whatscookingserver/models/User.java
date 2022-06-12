@@ -1,5 +1,6 @@
 package com.ironhack.whatscookingserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,6 +32,14 @@ public class User {
             message = "Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter.")
     private String password;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cookbook cookbook;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Note> notes;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
@@ -37,5 +47,6 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.notes = new ArrayList<>();
     }
 }

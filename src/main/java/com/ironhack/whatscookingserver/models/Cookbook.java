@@ -1,5 +1,6 @@
 package com.ironhack.whatscookingserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,12 +31,17 @@ public class Cookbook {
     )
     private List<Recipe> recipeList;
 
+//    @OneToMany
+//    private List<Note> noteList;
+
+
 
     public Cookbook(Long id, User owner) {
         //this.id = owner.getId();
         this.id = id;
         this.owner = owner;
         this.recipeList = new ArrayList<>();
+        //this.noteList = new ArrayList<>();
     }
 
     //methods
