@@ -36,7 +36,7 @@ public class CookbookService implements CookbookServiceInterface {
     public Cookbook findById(Long id) {
         return cookbookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
     }
-    
+
     public void update(Long cookbookId, List<Recipe> recipeList) {
         Cookbook cookbookFromDB = cookbookRepository.findById(cookbookId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
         cookbookFromDB.setRecipeList(recipeList);

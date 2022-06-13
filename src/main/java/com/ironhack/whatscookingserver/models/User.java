@@ -36,10 +36,10 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Cookbook cookbook;
 
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Note> notes;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Note> notes;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
@@ -47,6 +47,6 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.notes = new ArrayList<>();
+        //this.notes = new ArrayList<>();
     }
 }

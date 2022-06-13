@@ -1,6 +1,7 @@
 package com.ironhack.whatscookingserver.service.impl;
 
 import com.ironhack.whatscookingserver.DTO.NoteDTO;
+import com.ironhack.whatscookingserver.DTO.UpdateNoteDTO;
 import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.models.User;
@@ -30,9 +31,9 @@ public class NoteService implements NoteServiceInterface {
     public void saveNote(NoteDTO noteDTO) {
         //create new Note object
         log.info("Saving a new note to the database");
-        User author = userRepository.findById(noteDTO.getUserId()).get();
-        //Recipe recipe = recipeRepository.findById(noteDTO.getRecipeId()).get();
-        Note note = new Note(author, noteDTO.getRecipeId(), noteDTO.getContent());
+        //User author = userRepository.findById(noteDTO.getUserId()).get();
+        Recipe recipe = recipeRepository.findById(noteDTO.getRecipeId()).get();
+        Note note = new Note(noteDTO.getUserId(), recipe, noteDTO.getContent());
         noteRepository.save(note);
     }
 
@@ -40,9 +41,15 @@ public class NoteService implements NoteServiceInterface {
         return noteRepository.findByUserId(userId);
     }
 
-    public void updateNote(Long id, String newContent) {
+//    public void updateNote(Long id, String newContent) {
+//        Note noteFromDb = noteRepository.findById(id).get();
+//        noteFromDb.setContent(newContent);
+//        noteRepository.save(noteFromDb);
+//    }
+
+    public void updateNote(Long id, UpdateNoteDTO updateNoteDTO) {
         Note noteFromDb = noteRepository.findById(id).get();
-        noteFromDb.setContent(newContent);
+        noteFromDb.setContent(updateNoteDTO.getContent());
         noteRepository.save(noteFromDb);
     }
 

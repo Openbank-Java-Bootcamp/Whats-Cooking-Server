@@ -18,21 +18,20 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 //    @JsonIgnore
 //    @ManyToOne
-//    @JoinColumn(name = "recipe_id")
-//    private Recipe recipe;
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
-//    @NotNull
-//    private Long authorId;
-//
+
     @NotNull
-    private Long recipeId;
+    private Long userId;
+
+    @NotNull
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
     @NotEmpty
     private String content;
@@ -45,9 +44,9 @@ public class Note {
 //    }
 
 
-    public Note(User user, Long recipeId, String content) {
-        this.user = user;
-        this.recipeId = recipeId;
+    public Note(Long userId, Recipe recipe, String content) {
+        this.userId = userId;
+        this.recipe = recipe;
         this.content = content;
     }
 }

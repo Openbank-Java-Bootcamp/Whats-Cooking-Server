@@ -41,21 +41,17 @@ public class Recipe {
     private User addedBy;
 
 //    @JsonIgnore
-//    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-//    private List<Note> notes;
-
-//    @JsonIgnore
 //    @ManyToMany(mappedBy = "recipeList")
 //    private List<Cookbook> cookbooks;
 
-//    @JsonIgnore
-//    @OneToMany
-//    private List<Note> noteList;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Note> notes = new ArrayList<>();
 
-    //private boolean isOriginal;
+    @Lob//specifies that column in db will be long text
+    private String image;
 
 
-    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy) {
+    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy, String image) {
         this.title = title;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
@@ -63,9 +59,7 @@ public class Recipe {
         this.ingredients = ingredients;
         this.directions = directions;
         this.addedBy = addedBy;
-        //this.notes = new ArrayList<>();
-        //this.cookbooks = new ArrayList<>();
-        //this.isOriginal = isOriginal;
+        this.image = image;
     }
 
 

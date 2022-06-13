@@ -1,6 +1,7 @@
 package com.ironhack.whatscookingserver.controller;
 
 import com.ironhack.whatscookingserver.DTO.NoteDTO;
+import com.ironhack.whatscookingserver.DTO.UpdateNoteDTO;
 import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.service.interfaces.NoteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,16 @@ public class NoteController {
         return noteService.getNotesByUserId(userId);
     }
 
+//    @PatchMapping("/notes/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updateNote(@PathVariable Long id, @RequestParam String content) {
+//        noteService.updateNote(id, content);
+//    }
+
     @PatchMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@PathVariable Long id, @RequestParam String content) {
-        noteService.updateNote(id, content);
+    public void updateNote(@PathVariable Long id, @RequestBody UpdateNoteDTO updateNoteDTO) {
+        noteService.updateNote(id, updateNoteDTO);
     }
 
     @DeleteMapping("/notes/{id}")

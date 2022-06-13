@@ -38,7 +38,7 @@ public class RecipeService implements RecipeServiceInterface {
         User user = userRepository.findById(recipeDTO.getUserId()).get();
         Recipe recipe = new Recipe(recipeDTO.getTitle(), recipeDTO.getPrepTime(), recipeDTO.getCookTime(),
                 recipeDTO.getServings(), recipeDTO.getIngredients(), recipeDTO.getDirections(),
-                user);
+                user, recipeDTO.getImage()) ;
         recipeRepository.save(recipe);
         log.info("Recipe saved to database");
         //save new recipe to user's cookbook
