@@ -36,11 +36,18 @@ public class RecipeController {
         return recipeService.findById(id);
     }
 
+//    @PutMapping("/recipes/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid RecipeDTO recipeDTO) {
+//        recipeService.updateRecipe(id, recipeDTO);
+//    }
+
     @PutMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid RecipeDTO recipeDTO) {
-        recipeService.updateRecipe(id, recipeDTO);
+    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid Recipe recipe) {
+        recipeService.updateRecipe(id, recipe);
     }
+
 
     @DeleteMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

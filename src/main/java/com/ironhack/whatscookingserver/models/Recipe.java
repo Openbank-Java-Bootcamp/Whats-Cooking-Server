@@ -52,6 +52,17 @@ public class Recipe {
     private String image;
 
 
+    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, String image) {
+        this.title = title;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.ingredients = ingredients;
+        this.directions = directions;
+        this.image = image;
+    }
+
+    //need this for POST request to save new recipe
     public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy, String image) {
         this.title = title;
         this.prepTime = prepTime;
@@ -61,6 +72,18 @@ public class Recipe {
         this.directions = directions;
         this.addedBy = addedBy;
         this.image = image;
+    }
+
+    //need this for PUT request to update recipe
+    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, List<Cookbook> cookbooks, List<Note> notes) {
+        this.title = title;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.ingredients = ingredients;
+        this.directions = directions;
+        this.cookbooks = cookbooks;
+        this.notes = notes;
     }
 
     //METHODS

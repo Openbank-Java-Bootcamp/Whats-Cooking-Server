@@ -12,9 +12,9 @@ public interface RecipeServiceInterface {
 
     Recipe findById(Long id);
 
-    //void update(Long id, Recipe recipe);
+    void updateRecipe(Long id, Recipe recipe);
 
-    void updateRecipe(Long id, RecipeDTO recipeDTO);
+    //void updateRecipe(Long id, RecipeDTO recipeDTO);
 
     void deleteRecipe(Long id);
 }
