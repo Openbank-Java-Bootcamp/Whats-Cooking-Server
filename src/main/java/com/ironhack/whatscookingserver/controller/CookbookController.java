@@ -1,6 +1,5 @@
 package com.ironhack.whatscookingserver.controller;
 
-import com.ironhack.whatscookingserver.DTO.UpdateCookbookDTO;
 import com.ironhack.whatscookingserver.models.Cookbook;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.service.interfaces.CookbookServiceInterface;
@@ -29,9 +28,15 @@ public class CookbookController {
 
     @PatchMapping("/cookbooks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCookbook(@PathVariable(name="id") Long cookbookId, @RequestParam List<Recipe> recipeList) {
+    public void updateCookbook(@PathVariable(name="id") Long cookbookId, @RequestBody List<Recipe> recipeList) {
         cookbookService.update(cookbookId, recipeList);
     }
+
+//    @PatchMapping("/cookbooks/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updateCookbook(@PathVariable(name="id") Long cookbookId, @RequestBody Recipe recipe) {
+//        cookbookService.update(cookbookId, recipe);
+//    }
 
 
 }

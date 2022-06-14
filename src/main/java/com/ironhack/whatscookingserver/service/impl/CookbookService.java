@@ -1,6 +1,5 @@
 package com.ironhack.whatscookingserver.service.impl;
 
-import com.ironhack.whatscookingserver.DTO.UpdateCookbookDTO;
 import com.ironhack.whatscookingserver.models.Cookbook;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.models.User;
@@ -42,5 +41,17 @@ public class CookbookService implements CookbookServiceInterface {
         cookbookFromDB.setRecipeList(recipeList);
         cookbookRepository.save(cookbookFromDB);
     }
+
+//    public void update(Long cookbookId, Recipe recipe) {
+//        Cookbook cookbookFromDB = cookbookRepository.findById(cookbookId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
+//        List<Recipe> recipesList = cookbookFromDB.getRecipeList();
+//        if (recipesList.contains(recipe)) {
+//            recipesList.remove(recipe);
+//        } else {
+//            recipesList.add(recipe);
+//        }
+//        cookbookFromDB.setRecipeList(recipesList);
+//        cookbookRepository.save(cookbookFromDB);
+//    }
 
 }

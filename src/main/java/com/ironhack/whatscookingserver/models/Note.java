@@ -8,21 +8,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Note {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    @JsonIgnore
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
 
     @NotNull
     private Long userId;
@@ -34,14 +30,8 @@ public class Note {
     private Recipe recipe;
 
     @NotEmpty
+    @Size(max = 150)
     private String content;
-
-
-//    public Note(Long authorId, Long recipeId, String content) {
-//        this.authorId = authorId;
-//        this.recipeId = recipeId;
-//        this.content = content;
-//    }
 
 
     public Note(Long userId, Recipe recipe, String content) {

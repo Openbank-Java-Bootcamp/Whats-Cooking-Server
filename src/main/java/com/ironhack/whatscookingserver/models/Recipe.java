@@ -40,12 +40,13 @@ public class Recipe {
     @ManyToOne
     private User addedBy;
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "recipeList")
-//    private List<Cookbook> cookbooks;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "recipeList")
+    private List<Cookbook> cookbooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Note> notes = new ArrayList<>();
+
 
     @Lob//specifies that column in db will be long text
     private String image;
@@ -62,20 +63,25 @@ public class Recipe {
         this.image = image;
     }
 
-
     //METHODS
-//    public void addCookbookToList(Cookbook cookbook) {
-//        List<Cookbook> cookbooks = getCookbooks();
-//        cookbooks.add(cookbook);
-//        cookbook.addRecipeToCookbook(this);
-//        setCookbooks(cookbooks);
-//    }
-//
-//    public void removeCookbookFromList(Cookbook cookbook) {
-//        List<Cookbook> cookbooks = getCookbooks();
-//        cookbooks.remove(cookbook);
-//        cookbook.removeRecipeFromCookbook(this);
-//        setCookbooks(cookbooks);
-//    }
+    public void addCookbook(Cookbook cookbook) {
+        List<Cookbook> cookbooks = this.getCookbooks();
+        cookbooks.add(cookbook);
+        this.setCookbooks(cookbooks);
+
+        List<Recipe> recipes = cookbook.getRecipeList();
+        recipes.add(this);
+        cookbook.setRecipeList(recipes);
+    }
+
+    public void removeCookBook(Cookbook cookbook) {
+        List<Cookbook> cookbooks = this.getCookbooks();
+        cookbooks.remove(this);
+        this.setCookbooks(cookbooks);
+
+        List<Recipe> recipes = cookbook.getRecipeList();
+        recipes.remove(this);
+        cookbook.setRecipeList(recipes);
+    }
 
 }

@@ -38,8 +38,8 @@ public class RecipeController {
 
     @PutMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid Recipe recipe) {
-        recipeService.update(id, recipe);
+    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid RecipeDTO recipeDTO) {
+        recipeService.updateRecipe(id, recipeDTO);
     }
 
     @DeleteMapping("/recipes/{id}")

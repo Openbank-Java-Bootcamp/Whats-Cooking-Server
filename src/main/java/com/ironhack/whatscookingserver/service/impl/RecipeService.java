@@ -35,7 +35,7 @@ public class RecipeService implements RecipeServiceInterface {
     public void saveRecipe(RecipeDTO recipeDTO) {
         log.info("Saving a new recipe {} inside of the database", recipeDTO.getTitle());
         //create new Recipe object and save to repo
-        User user = userRepository.findById(recipeDTO.getUserId()).get();
+        User user = userRepository.findById(recipeDTO.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         Recipe recipe = new Recipe(recipeDTO.getTitle(), recipeDTO.getPrepTime(), recipeDTO.getCookTime(),
                 recipeDTO.getServings(), recipeDTO.getIngredients(), recipeDTO.getDirections(),
                 user, recipeDTO.getImage()) ;
@@ -47,31 +47,37 @@ public class RecipeService implements RecipeServiceInterface {
         userCookbook.addRecipeToCookbook(recipe);
         cookbookRepository.save(userCookbook);
         log.info("Recipe saved to cookbook");
-
-//        //add user's cookbook to list in recipe
-//        recipe.addCookbookToList(userCookbook);
-//        recipeRepository.save(recipe);
     }
 
     public List<Recipe> getRecipes() {
-        List<Recipe> recipes = recipeRepository.findAll();
-
-//        List<Recipe> originalRecipes = recipes.stream().filter(recipe ->
-//                recipe.isOriginal()).collect(Collectors.toList());
-        return recipes;
+        //List<Recipe> recipes = recipeRepository.findAll();
+        return recipeRepository.findAll();
     }
 
     public Recipe findById(Long id) {
         return recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
     }
 
-    public void update(Long id, Recipe recipe) {
+    public void updateRecipe(Long id, RecipeDTO recipeDTO) {
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        recipe.setId(recipeFromDB.getId());
-        recipeRepository.save(recipe);
+        recipeFromDB.setTitle(recipeDTO.getTitle());
+        recipeFromDB.setPrepTime(recipeDTO.getPrepTime());
+        recipeFromDB.setCookTime(recipeDTO.getCookTime());
+        recipeFromDB.setServings(recipeDTO.getServings());
+        recipeFromDB.setIngredients(recipeFromDB.getIngredients());
+        recipeFromDB.setDirections(recipeFromDB.getDirections());
+        recipeFromDB.setImage(recipeFromDB.getImage());
+        recipeRepository.save(recipeFromDB);
     }
 
     public void deleteRecipe(Long id) {
-        recipeRepository.deleteById(id);
+        Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
+        List<Cookbook> connectedCookbooks = recipeFromDB.getCookbooks();
+        connectedCookbooks.forEach((cookbook) -> {
+            recipeFromDB.removeCookBook(cookbook);
+            cookbookRepository.save(cookbook);
+        });
+        recipeRepository.save(recipeFromDB);
+        recipeRepository.delete(recipeFromDB);
     }
 }
