@@ -7,6 +7,7 @@ import com.ironhack.whatscookingserver.repository.RoleRepository;
 import com.ironhack.whatscookingserver.repository.UserRepository;
 import com.ironhack.whatscookingserver.service.interfaces.CookbookServiceInterface;
 import com.ironhack.whatscookingserver.service.interfaces.UserServiceInterface;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,5 +72,19 @@ public class UserService implements UserServiceInterface, UserDetailsService {
             });
             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
         }
+    }
+
+    public void deleteUser(Long userId) {
+        User userFromDb = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        Cookbook cookbookFromDb = cookbookRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
+        log.info("Removing relationship between user and their cookbook.");
+        cookbookFromDb.setOwner(null);
+        userFromDb.setCookbook(null);
+        cookbookRepository.save(cookbookFromDb);
+        userRepository.save(userFromDb);
+        log.info("Deleting user and their cookbook from the database.");
+        cookbookRepository.delete(cookbookFromDb);
+        userRepository.delete(userFromDb);
+
     }
 }

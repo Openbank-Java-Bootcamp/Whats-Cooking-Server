@@ -36,6 +36,11 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Cookbook cookbook;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
+    private List<Recipe> recipes;
+
+
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Note> notes;
 
@@ -47,6 +52,5 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        //this.notes = new ArrayList<>();
     }
 }

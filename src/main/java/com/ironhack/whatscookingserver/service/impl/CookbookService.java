@@ -36,22 +36,23 @@ public class CookbookService implements CookbookServiceInterface {
         return cookbookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
     }
 
-    public void update(Long cookbookId, List<Recipe> recipeList) {
+
+    public void update(Long cookbookId, Long recipeId) {
+        //get cookbook and recipe from database
+        Recipe recipeFromDb = recipeRepository.findById(recipeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
         Cookbook cookbookFromDB = cookbookRepository.findById(cookbookId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
-        cookbookFromDB.setRecipeList(recipeList);
+        List<Recipe> recipesList = cookbookFromDB.getRecipeList();
+
+        //check if recipe already exists in the cookbook's recipeList and then add or remove the recipe, this will update the relationship on both ends
+        if (recipesList.contains(recipeFromDb)) {
+            recipeFromDb.removeCookBook(cookbookFromDB);
+        } else {
+            recipeFromDb.addCookbook(cookbookFromDB);
+        }
+
+        //save both objects so the change in relationship is sent to the database
+        recipeRepository.save(recipeFromDb);
         cookbookRepository.save(cookbookFromDB);
     }
-
-//    public void update(Long cookbookId, Recipe recipe) {
-//        Cookbook cookbookFromDB = cookbookRepository.findById(cookbookId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cookbook not found"));
-//        List<Recipe> recipesList = cookbookFromDB.getRecipeList();
-//        if (recipesList.contains(recipe)) {
-//            recipesList.remove(recipe);
-//        } else {
-//            recipesList.add(recipe);
-//        }
-//        cookbookFromDB.setRecipeList(recipesList);
-//        cookbookRepository.save(cookbookFromDB);
-//    }
 
 }

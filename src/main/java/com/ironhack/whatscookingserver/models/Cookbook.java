@@ -17,7 +17,6 @@ import java.util.List;
 public class Cookbook {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -29,7 +28,7 @@ public class Cookbook {
             joinColumns = @JoinColumn(name = "cookbook_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_id")
     )
-    private List<Recipe> recipeList;
+    private List<Recipe> recipeList = new ArrayList<>();
 
 //    @OneToMany
 //    private List<Note> noteList;
@@ -37,11 +36,9 @@ public class Cookbook {
 
 
     public Cookbook(Long id, User owner) {
-        //this.id = owner.getId();
         this.id = id;
         this.owner = owner;
-        this.recipeList = new ArrayList<>();
-        //this.noteList = new ArrayList<>();
+        //this.recipeList = new ArrayList<>();
     }
 
     //methods

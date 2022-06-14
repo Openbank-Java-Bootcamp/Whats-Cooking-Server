@@ -60,13 +60,14 @@ public class RecipeService implements RecipeServiceInterface {
 
     public void updateRecipe(Long id, RecipeDTO recipeDTO) {
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
+        System.out.println(recipeDTO);
         recipeFromDB.setTitle(recipeDTO.getTitle());
         recipeFromDB.setPrepTime(recipeDTO.getPrepTime());
         recipeFromDB.setCookTime(recipeDTO.getCookTime());
         recipeFromDB.setServings(recipeDTO.getServings());
         recipeFromDB.setIngredients(recipeFromDB.getIngredients());
         recipeFromDB.setDirections(recipeFromDB.getDirections());
-        recipeFromDB.setImage(recipeFromDB.getImage());
+        //recipeFromDB.setImage(recipeFromDB.getImage());
         recipeRepository.save(recipeFromDB);
     }
 

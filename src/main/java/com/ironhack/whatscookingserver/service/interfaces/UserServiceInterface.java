@@ -8,4 +8,6 @@ public interface UserServiceInterface {
     User saveUser(User userSignupDTO);
 
     List<User> getUsers();
+
+    void deleteUser(Long userId);
 }

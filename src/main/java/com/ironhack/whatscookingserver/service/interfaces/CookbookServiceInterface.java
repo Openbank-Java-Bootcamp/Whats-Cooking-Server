@@ -12,8 +12,5 @@ public interface CookbookServiceInterface {
 
     Cookbook findById(Long id);
 
-    void update(Long cookbookId, List<Recipe> recipeList);
-
-    //void update(Long cookbookId, Recipe recipe);
-
+    void update(Long cookbookId, Long recipeId);
 }
