@@ -36,10 +36,10 @@ public class RecipeController {
         return recipeService.findById(id);
     }
 
-    @GetMapping("/recipes?search={q}")
+    @GetMapping("/recipes/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<Recipe> getRecipesByTitleOrIngredient(@RequestParam String q) {
-        return recipeService.findByTitleOrIngredient(q);
+    public List<Recipe> getRecipesByTitleOrIngredient(@RequestParam String query) {
+        return recipeService.findByTitleOrIngredient(query);
     }
 
     @PutMapping("/recipes/{id}")

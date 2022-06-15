@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -55,13 +56,20 @@ public class RecipeService implements RecipeServiceInterface {
     }
 
     public List<Recipe> findByTitleOrIngredient(String query) {
-        return recipeRepository.findByTitleOrIngredients(query);
+        //search by titles and ingredients containing the query
+        List<Recipe> titleResults = recipeRepository.findByTitleContains(query);
+        List<Recipe> ingredientsResults = recipeRepository.findByIngredientsContains(query);
+
+        //Combine the two results arrays into one without duplicates
+        ingredientsResults.removeAll(titleResults);
+        titleResults.addAll(ingredientsResults);
+
+        return titleResults;
     }
 
     public void updateRecipe(Long id, Recipe recipe) {
         //find recipe to be updated using the id
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        System.out.println(recipe);
         //set the other attributes from the existing recipe and save to the new recipe
         recipe.setId(recipeFromDB.getId());
         recipe.setAddedBy(recipeFromDB.getAddedBy());

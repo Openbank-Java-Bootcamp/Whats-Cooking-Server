@@ -54,9 +54,9 @@ public class WhatsCookingServerApplication {
 			user3.setPassword(passwordEncoder.encode(user3.getPassword()));
 			userRepository.saveAll(List.of(user1, user2, user3));
 
-			Recipe recipe1 = new Recipe("Recipe 1", 10, 30, 4, "1 cup ingredient1, 2T ingredient2, pinch of ingredient3", "First mix everything. Then bake for 30 min.", user1);
-			Recipe recipe2 = new Recipe("Recipe 2", 30, 60, 6, "1 cup ingredient1, 2T ingredient2, pinch of ingredient3", "First mix everything. Then bake for 30 min.", user2);
-			Recipe recipe3 = new Recipe("Recipe 3", 20, 15, 2, "1 cup ingredient1, 2T ingredient2, pinch of ingredient3", "First mix everything. Then bake for 30 min.", user3);
+			Recipe recipe1 = new Recipe("Cookies", 20, 25, 8, "2 cups flour, 1/2 cup sugar, 1t baking powder, 1 egg, 1/4 cup water, 1/4t vanilla extract, 1/2 cup chocolate chips", "First mix everything. Then bake for 25 min.", user1);
+			Recipe recipe2 = new Recipe("Pizza", 30, 35, 4, "3 cups flour, 2 eggs, water, 1/2t salt, 3/4 cup tomato sauce, 1.5 cups shredded cheese", "Combine flour, eggs, water, and salt and knead to make the dough. Form dough on pizza pan, spread sauce on top, and sprinkle the cheese. Add any toppings as desired. Bake 35 min at 400F ", user2);
+			Recipe recipe3 = new Recipe("Quesadilla", 5, 5, 1, "2 tortillas, 3/4 cup cheese, tomato salsa", "Put the cheese between the tortillas. Grill 2 min on each side. Dip in salsa to eat.", user3);
 
 //			Note note1 = new Note(user1, recipe1, "Use 1.5 cups of ingredient 1 instead!");
 //			noteRepository.save(note1);

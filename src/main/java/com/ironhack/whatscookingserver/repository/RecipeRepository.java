@@ -13,6 +13,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     public List<Recipe> findByAddedBy(User addedBy);
 
-    @Query(value = "SELECT * FROM recipe WHERE title LIKE '%:q%' OR ingredients LIKE '%:q%'", nativeQuery = true)
-    public List<Recipe> findByTitleOrIngredients(String q);
+    public List<Recipe> findByTitleContains(String string);
+
+    public List<Recipe> findByIngredientsContains(String string);
 }
