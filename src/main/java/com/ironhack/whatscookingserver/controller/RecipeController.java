@@ -5,6 +5,7 @@ import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.service.interfaces.RecipeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,14 +45,14 @@ public class RecipeController {
 
     @PutMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid Recipe recipe) {
-        recipeService.updateRecipe(id, recipe);
+    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid Recipe recipe, Authentication authentication) {
+        recipeService.updateRecipe(id, recipe, authentication);
     }
 
 
     @DeleteMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProject(@PathVariable Long id) {
-        recipeService.deleteRecipe(id);
+    public void deleteProject(@PathVariable Long id, Authentication authentication) {
+        recipeService.deleteRecipe(id, authentication);
     }
 }

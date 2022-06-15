@@ -2,6 +2,7 @@ package com.ironhack.whatscookingserver.service.impl;
 
 import com.ironhack.whatscookingserver.DTO.NoteDTO;
 import com.ironhack.whatscookingserver.DTO.UpdateNoteDTO;
+import com.ironhack.whatscookingserver.models.Cookbook;
 import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.models.User;
@@ -11,7 +12,10 @@ import com.ironhack.whatscookingserver.repository.UserRepository;
 import com.ironhack.whatscookingserver.service.interfaces.NoteServiceInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -41,20 +45,30 @@ public class NoteService implements NoteServiceInterface {
         return noteRepository.findByUserId(userId);
     }
 
-//    public void updateNote(Long id, String newContent) {
-//        Note noteFromDb = noteRepository.findById(id).get();
-//        noteFromDb.setContent(newContent);
-//        noteRepository.save(noteFromDb);
-//    }
+    public void updateNote(Long id, UpdateNoteDTO updateNoteDTO, Authentication authentication) {
+        //verify that user is the note owner
+        String email = (String) authentication.getPrincipal();
+        User userFromDb = userRepository.findByEmail(email);
+        Note noteFromDb = noteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found"));
 
-    public void updateNote(Long id, UpdateNoteDTO updateNoteDTO) {
-        Note noteFromDb = noteRepository.findById(id).get();
-        noteFromDb.setContent(updateNoteDTO.getContent());
-        noteRepository.save(noteFromDb);
+        if (userFromDb.getId() != noteFromDb.getUserId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User not authorized for this request.");
+        } else {
+            noteFromDb.setContent(updateNoteDTO.getContent());
+            noteRepository.save(noteFromDb);
+        }
     }
 
-    public void deleteNote(Long id) {
-        Note noteFromDb = noteRepository.findById(id).get();
-        noteRepository.delete(noteFromDb);
+    public void deleteNote(Long id, Authentication authentication) {
+        //verify that user is the note owner
+        String email = (String) authentication.getPrincipal();
+        User userFromDb = userRepository.findByEmail(email);
+        Note noteFromDb = noteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found"));
+
+        if (userFromDb.getId() != noteFromDb.getUserId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User not authorized for this request.");
+        } else {
+            noteRepository.delete(noteFromDb);
+        }
     }
 }

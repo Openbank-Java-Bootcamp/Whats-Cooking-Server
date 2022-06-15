@@ -2,6 +2,7 @@ package com.ironhack.whatscookingserver.service.impl;
 
 import com.ironhack.whatscookingserver.DTO.RecipeDTO;
 import com.ironhack.whatscookingserver.models.Cookbook;
+import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.models.Recipe;
 import com.ironhack.whatscookingserver.models.User;
 import com.ironhack.whatscookingserver.repository.CookbookRepository;
@@ -11,6 +12,7 @@ import com.ironhack.whatscookingserver.service.interfaces.RecipeServiceInterface
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -67,27 +69,42 @@ public class RecipeService implements RecipeServiceInterface {
         return titleResults;
     }
 
-    public void updateRecipe(Long id, Recipe recipe) {
-        //find recipe to be updated using the id
+    public void updateRecipe(Long id, Recipe recipe, Authentication authentication) {
+        //verify that user is the note owner
+        String email = (String) authentication.getPrincipal();
+        User userFromDb = userRepository.findByEmail(email);
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        //set the other attributes from the existing recipe and save to the new recipe
-        recipe.setId(recipeFromDB.getId());
-        recipe.setAddedBy(recipeFromDB.getAddedBy());
-        recipe.setCookbooks(recipeFromDB.getCookbooks());
-        recipe.setNotes(recipeFromDB.getNotes());
-        //save recipe with updated info in old recipe's place
-        recipeRepository.save(recipe);
+
+        if (userFromDb.getId() != recipeFromDB.getAddedBy().getId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User not authorized for this request.");
+        } else {
+            //set the other attributes from the existing recipe and save to the new recipe
+            recipe.setId(recipeFromDB.getId());
+            recipe.setAddedBy(recipeFromDB.getAddedBy());
+            recipe.setCookbooks(recipeFromDB.getCookbooks());
+            recipe.setNotes(recipeFromDB.getNotes());
+            //save recipe with updated info in old recipe's place
+            recipeRepository.save(recipe);
+        }
     }
 
-    public void deleteRecipe(Long id) {
+    public void deleteRecipe(Long id, Authentication authentication) {
+        //verify that user is the note owner
+        String email = (String) authentication.getPrincipal();
+        User userFromDb = userRepository.findByEmail(email);
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        List<Cookbook> connectedCookbooks = recipeFromDB.getCookbooks();
-        //need to remove relationships with cookbooks before the recipe can be deleted
-        connectedCookbooks.forEach((cookbook) -> {
-            recipeFromDB.removeCookBook(cookbook);
-            cookbookRepository.save(cookbook);
-        });
-        recipeRepository.save(recipeFromDB);
-        recipeRepository.delete(recipeFromDB);
+
+        if (userFromDb.getId() != recipeFromDB.getAddedBy().getId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User not authorized for this request.");
+        } else {
+            List<Cookbook> connectedCookbooks = recipeFromDB.getCookbooks();
+            //need to remove relationships with cookbooks before the recipe can be deleted
+            connectedCookbooks.forEach((cookbook) -> {
+                recipeFromDB.removeCookBook(cookbook);
+                cookbookRepository.save(cookbook);
+            });
+            recipeRepository.save(recipeFromDB);
+            recipeRepository.delete(recipeFromDB);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.ironhack.whatscookingserver.models.Note;
 import com.ironhack.whatscookingserver.service.interfaces.NoteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,13 +41,13 @@ public class NoteController {
 
     @PatchMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@PathVariable Long id, @RequestBody UpdateNoteDTO updateNoteDTO) {
-        noteService.updateNote(id, updateNoteDTO);
+    public void updateNote(@PathVariable Long id, @RequestBody UpdateNoteDTO updateNoteDTO, Authentication authentication) {
+        noteService.updateNote(id, updateNoteDTO, authentication);
     }
 
     @DeleteMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteNote(@PathVariable Long id) {
-        noteService.deleteNote(id);
+    public void deleteNote(@PathVariable Long id, Authentication authentication) {
+        noteService.deleteNote(id, authentication);
     }
 }
