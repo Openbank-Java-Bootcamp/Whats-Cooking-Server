@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/auth/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody @Valid User user) {
+    public User saveUser(@RequestBody @Valid User user) throws Exception {
        return userService.saveUser(user);
     }
 

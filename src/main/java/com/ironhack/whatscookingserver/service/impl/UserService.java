@@ -41,16 +41,22 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public User saveUser(User userSignupDTO) {
-        log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
-        User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
-        System.out.println("user created");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println("password set");
-        userRepository.save(user);
-        //automatically create a cookbook for the user
-        cookbookService.saveCookbook(user);
-        return user;
+    public User saveUser(User userSignupDTO) throws Exception {
+        //first check if already a user with this email
+        User userFromDb = userRepository.findByEmail(userSignupDTO.getEmail());
+        if (userFromDb != null) {
+            throw new Exception("User with " + userSignupDTO.getEmail() + " already exists");
+        } else {
+            log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
+            User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
+            System.out.println("user created");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            System.out.println("password set");
+            userRepository.save(user);
+            //automatically create a cookbook for the user
+            cookbookService.saveCookbook(user);
+            return user;
+        }
     }
 
     public List<User> getUsers() {
