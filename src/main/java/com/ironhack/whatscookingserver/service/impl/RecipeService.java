@@ -54,6 +54,10 @@ public class RecipeService implements RecipeServiceInterface {
         return recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
     }
 
+    public List<Recipe> findByTitleOrIngredient(String query) {
+        return recipeRepository.findByTitleOrIngredients(query);
+    }
+
     public void updateRecipe(Long id, Recipe recipe) {
         //find recipe to be updated using the id
         Recipe recipeFromDB = recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));

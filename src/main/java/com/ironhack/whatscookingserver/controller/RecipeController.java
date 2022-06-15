@@ -36,11 +36,11 @@ public class RecipeController {
         return recipeService.findById(id);
     }
 
-//    @PutMapping("/recipes/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateRecipe(@PathVariable Long id, @RequestBody @Valid RecipeDTO recipeDTO) {
-//        recipeService.updateRecipe(id, recipeDTO);
-//    }
+    @GetMapping("/recipes?search={q}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Recipe> getRecipesByTitleOrIngredient(@RequestParam String q) {
+        return recipeService.findByTitleOrIngredient(q);
+    }
 
     @PutMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

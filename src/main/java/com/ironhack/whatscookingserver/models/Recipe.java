@@ -86,6 +86,17 @@ public class Recipe {
         this.notes = notes;
     }
 
+    //Need this one for the command line runner
+    public Recipe(String title, int prepTime, int cookTime, int servings, String ingredients, String directions, User addedBy) {
+        this.title = title;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.ingredients = ingredients;
+        this.directions = directions;
+        this.addedBy = addedBy;
+    }
+
     //METHODS
     public void addCookbook(Cookbook cookbook) {
         List<Cookbook> cookbooks = this.getCookbooks();

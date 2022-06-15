@@ -12,6 +12,8 @@ public interface RecipeServiceInterface {
 
     Recipe findById(Long id);
 
+    List<Recipe> findByTitleOrIngredient(String query);
+
     void updateRecipe(Long id, Recipe recipe);
 
     //void updateRecipe(Long id, RecipeDTO recipeDTO);
