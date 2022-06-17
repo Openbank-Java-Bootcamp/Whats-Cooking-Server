@@ -41,5 +41,7 @@ Ability for users to be able to follow eachother and receive recipe suggestions 
 
 ## Resources
 W3Schools website https://www.w3schools.com/
+
 Baeldung website https://www.baeldung.com/
+
 and of course my Ironhack instructors Raymond and Shaun
