@@ -9,6 +9,10 @@ Each User is linked to one Cookbook, where they will save the Recipes they choos
 The Cookbook can hold many Recipes. 
 A User can make a Note per Recipe. 
 
+View the trello board: https://trello.com/b/nzXCoDvl/whats-cooking-app
+
+Presentation slides: https://docs.google.com/presentation/d/1Chd84AIYlSS-H38_d6vyUUoIWcVoKR0PmY14GGJTLUY/edit#slide=id.g133420955c1_0_0
+
 ## Setup
 
 The server is set to run on port 8081.
