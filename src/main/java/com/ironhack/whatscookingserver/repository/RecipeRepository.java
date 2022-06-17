@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    public List<Recipe> findByTitleContains(String string);
 
-    public List<Recipe> findByIngredientsContains(String string);
+    @Query(value="SELECT * FROM recipe WHERE recipe.title LIKE :query OR recipe.ingredients LIKE :query", nativeQuery = true)
+    public List<Recipe> findByIngredientsOrDirectionsContains(String query);
 }

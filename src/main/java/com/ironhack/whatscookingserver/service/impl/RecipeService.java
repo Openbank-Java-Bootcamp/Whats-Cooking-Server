@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -57,16 +58,21 @@ public class RecipeService implements RecipeServiceInterface {
         return recipeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
     }
 
+
     public List<Recipe> findByTitleOrIngredient(String query) {
-        //search by titles and ingredients containing the query
-        List<Recipe> titleResults = recipeRepository.findByTitleContains(query);
-        List<Recipe> ingredientsResults = recipeRepository.findByIngredientsContains(query);
+        //first get all recipes
+        List<Recipe> results = recipeRepository.findAll();
 
-        //Combine the two results arrays into one without duplicates
-        ingredientsResults.removeAll(titleResults);
-        titleResults.addAll(ingredientsResults);
+        //split string into words and search each word individually
+        String[] words = query.split(" ");
+        for (String word : words) {
+            String wildcardQuery = "%"+word+"%";
+            List<Recipe> matches = recipeRepository.findByIngredientsOrDirectionsContains(wildcardQuery);
+            //compare new list to previous list and only keep the common elements
+            results.retainAll(matches);
+        }
 
-        return titleResults;
+        return results;
     }
 
     public void updateRecipe(Long id, Recipe recipe, Authentication authentication) {
