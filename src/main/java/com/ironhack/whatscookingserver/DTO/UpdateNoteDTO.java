@@ -10,3 +10,6 @@ import lombok.NoArgsConstructor;
 public class UpdateNoteDTO {
     private String content;
 }
+
+//for updating a note
+

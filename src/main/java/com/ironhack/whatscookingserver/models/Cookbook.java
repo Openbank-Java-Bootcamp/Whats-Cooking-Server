@@ -30,15 +30,11 @@ public class Cookbook {
     )
     private List<Recipe> recipeList = new ArrayList<>();
 
-//    @OneToMany
-//    private List<Note> noteList;
-
 
 
     public Cookbook(Long id, User owner) {
         this.id = id;
         this.owner = owner;
-        //this.recipeList = new ArrayList<>();
     }
 
     //methods
@@ -48,9 +44,4 @@ public class Cookbook {
         setRecipeList(recipeList);
     }
 
-    public void removeRecipeFromCookbook(Recipe recipe) {
-        List<Recipe> recipeList = this.getRecipeList();
-        recipeList.remove(recipe);
-        setRecipeList(recipeList);
-    }
 }

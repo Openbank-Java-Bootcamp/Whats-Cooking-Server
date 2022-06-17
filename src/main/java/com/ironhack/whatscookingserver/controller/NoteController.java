@@ -7,7 +7,6 @@ import com.ironhack.whatscookingserver.service.interfaces.NoteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,11 +32,6 @@ public class NoteController {
         return noteService.getNotesByUserId(userId);
     }
 
-//    @PatchMapping("/notes/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateNote(@PathVariable Long id, @RequestParam String content) {
-//        noteService.updateNote(id, content);
-//    }
 
     @PatchMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

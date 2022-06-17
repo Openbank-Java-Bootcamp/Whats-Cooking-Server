@@ -41,9 +41,6 @@ public class User {
     private List<Recipe> recipes;
 
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Note> notes;
-
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();

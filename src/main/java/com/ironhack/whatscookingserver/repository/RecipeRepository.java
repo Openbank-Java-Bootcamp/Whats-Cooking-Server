@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    public List<Recipe> findByAddedBy(User addedBy);
-
     public List<Recipe> findByTitleContains(String string);
 
     public List<Recipe> findByIngredientsContains(String string);

@@ -13,8 +13,6 @@ public interface NoteServiceInterface {
 
     List<Note> getNotesByUserId(Long userId);
 
-    //void updateNote(Long id, String newContent);
-
     void updateNote(Long id, UpdateNoteDTO updateNoteDTO, Authentication authentication);
 
     void deleteNote(Long id, Authentication authentication);

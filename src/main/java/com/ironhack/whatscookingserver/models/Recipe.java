@@ -33,9 +33,11 @@ public class Recipe {
     private int servings;
 
     @NotEmpty
+    @Lob
     private String ingredients;
 
     @NotEmpty
+    @Lob
     private String directions;
 
     @ManyToOne

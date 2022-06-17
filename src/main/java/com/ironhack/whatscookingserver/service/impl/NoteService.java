@@ -35,7 +35,6 @@ public class NoteService implements NoteServiceInterface {
     public void saveNote(NoteDTO noteDTO) {
         //create new Note object
         log.info("Saving a new note to the database");
-        //User author = userRepository.findById(noteDTO.getUserId()).get();
         Recipe recipe = recipeRepository.findById(noteDTO.getRecipeId()).get();
         Note note = new Note(noteDTO.getUserId(), recipe, noteDTO.getContent());
         noteRepository.save(note);

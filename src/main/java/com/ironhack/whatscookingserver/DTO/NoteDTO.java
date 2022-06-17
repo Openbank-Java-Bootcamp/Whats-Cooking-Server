@@ -12,3 +12,5 @@ public class NoteDTO {
     private Long recipeId;
     private String content;
 }
+
+//for creating a new note

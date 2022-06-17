@@ -49,7 +49,6 @@ public class RecipeController {
         recipeService.updateRecipe(id, recipe, authentication);
     }
 
-
     @DeleteMapping("/recipes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProject(@PathVariable Long id, Authentication authentication) {
